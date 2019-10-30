@@ -3,11 +3,12 @@
  *@NScriptType ClientScript
  */
 
-define(['N/currentRecord'],
+define(['N/currentRecord','./k-p.js'],
 	//not really the entry point function more of a wrapper
-	function(currentRecord){
+	function(currentRecord,keys){
 		//entry point function
 		function bulkUpdateShopify(){
+            var keyData = keys.getKeys();
             var rec = currentRecord.get();
             var rec_title = rec.getValue({
                 fieldId:'title'
