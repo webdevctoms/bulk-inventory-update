@@ -3,36 +3,36 @@
  *@NScriptType ClientScript
  */
 
-define(['N/ui/dialog'],
+define(['N/currentRecord'],
 	//not really the entry point function more of a wrapper
-	function(dialog){
+	function(currentRecord){
 		//entry point function
-		function helloWorld(){
-			var options = {
-				title:'Hello',
-				message:'Hello world'
-			};
-
+		function bulkUpdateShopify(){
+            var rec = currentRecord.get();
+            var rec_title = rec.getValue({
+                fieldId:'title'
+            });
 			try{
-				//create the alert using the module
-				dialog.alert(options);
 				log.debug ({
-                    title: 'Success',
-                    details: 'Alert displayed successfully'
+                    title: 'Title',
+                    details: rec_title
                 });
+
+                return true;
 			}
 			catch(err){
-				//globally available logger
 				log.error({
 					title:err.name,
 					details:err.message
-				});
+                });
+                
+                return false;
 			}
 
 		}
 
 		return{
-			pageInit:helloWorld
+			saveRecord:bulkUpdateShopify
 		}
 	}
 );
