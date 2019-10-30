@@ -20,38 +20,43 @@ define(['N/currentRecord','./k-p.js','./shopify-calls.js'],
 					url:keyData.mesaurl
 				}
 			};
-			return shopify.getAllProducts(options)
+			if(rec_title.includes('Mass Update Shopify Inventory')){
+				return shopify.getAllProducts(options)
 			
-			.then(function(productdata){
-				try{
+				.then(function(productdata){
+					try{
+						log.debug ({
+							title: 'Title',
+							details: rec_title
+						});
+						
+						log.debug ({
+							title: 'Product Data',
+							details: productdata
+						});
+		
+						return true;
+					}
+					catch(err){
+						log.error({
+							title:err.name,
+							details:err.message
+						});
+						
+						return false;
+					}
+				})
+				
+				.catch(function(err){
 					log.debug ({
-						title: 'Title',
-						details: rec_title
+						title: 'Error getting all product Data',
+						details: err
 					});
-					
-					log.debug ({
-						title: 'Product Data',
-						details: productdata
-					});
-	
-					return true;
-				}
-				catch(err){
-					log.error({
-						title:err.name,
-						details:err.message
-					});
-					
-					return false;
-				}
-			})
-			
-			.catch(function(err){
-				log.debug ({
-                    title: 'Error getting all product Data',
-                    details: err
-                });
-			});
+				});
+			}
+			else{
+				return true;
+			}
 
 		}
 
