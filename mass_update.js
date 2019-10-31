@@ -22,6 +22,9 @@ define(['N/currentRecord','N/https','./k-p.js'],
 				});
 				return true;
 			}
+			else{
+				return true;
+			}
 			
 		}
 
