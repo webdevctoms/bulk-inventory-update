@@ -26,26 +26,31 @@ define(['N/currentRecord','N/https','./k-p.js'],
 					url:tokenUrl,
 					headers:header
 				}).then(function(tokenData){
-					/*
+					var parsedBody = JSON.parse(tokenData.body)
+					var token = parsedBody.token;
 					log.debug ({
 						title: 'token Data',
-						details: tokenData
+						details: token
 					});
-					*/
+					var body = JSON.stringify({
+						token:token
+					});
+					header['Content-Type'] = 'application/json';
 					//pass token in this request
-					return https.get.promise({
+					return https.post.promise({
 						url:url,
-						headers:header
+						headers:header,
+						body:body
 					})
 				})
 
 				.then(function(inventoryData){
-					/*
+					
 					log.debug ({
 						title: 'inventory Data',
 						details: inventoryData
 					});
-					*/
+					
 					return true;
 				})
 
