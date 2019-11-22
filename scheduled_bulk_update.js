@@ -12,22 +12,34 @@ define(['N/https','./k-p.js'],function(https,keys){
         var header = {
             Authorization:ck
         }
-        return https.get.promise({
+        var tokenData = https.get({
             url:tokenUrl,
             headers:header
-        }).then(function(tokenData){
-            var parsedBody = JSON.parse(tokenData.body)
-            var token = parsedBody.token;
-            log.debug ({
-                title: 'token Data',
-                details: token
-            });
-            var body = JSON.stringify({
-                token:token
-            });
+        });
 
-            return;
-        })
+        var parsedBody = JSON.parse(tokenData.body);
+        var token = parsedBody.token;
+        log.debug ({
+            title: 'token Data',
+            details: token
+        });
+        var body = JSON.stringify({
+            token:token
+        });
+        header['Content-Type'] = 'application/json';
+
+        var inventoryData = https.post({
+            url:url,
+            headers:header,
+            body:body
+        });
+
+        log.debug ({
+            title: 'inventory Data',
+            details: inventoryData
+        });
+
+        return true;
     }
 
     return {
